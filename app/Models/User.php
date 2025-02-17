@@ -6,6 +6,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Post;
+use App\Models\Comment;
 
 class User extends Authenticatable
 {
@@ -20,6 +22,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'username',
+        'image',
+        'status',
+        'country',
+        'city',
+        'street',
+        'phone',
     ];
 
     /**
@@ -43,5 +52,11 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    public function posts(){
+        return $this->hasMany(Post::class, 'user_id');
+    }
+    public function user(){
+        return $this->belongsTo(Comment::class, 'user_id');
     }
 }
