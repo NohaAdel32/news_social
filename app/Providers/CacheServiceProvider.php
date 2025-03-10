@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Providers;
-use App\Models\RelatedNewSite;
+use App\Models\Category;
 use App\Models\Post;
+use App\Models\RelatedNewSite;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 
@@ -31,9 +32,12 @@ class CacheServiceProvider extends ServiceProvider
 
         //related new sites
         $related=RelatedNewSite::select('name','url')->get();
+        $categories=Category::select('name','slug')->get();
         view()->share([
             'read_more_posts'=>$read_more_posts,
             'related'=>$related,
+            'categories'=>$categories,
+
         ]);
     }
 }

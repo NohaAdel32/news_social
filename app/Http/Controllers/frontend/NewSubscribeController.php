@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
+use App\Mail\frontend\NewsubscriberMail;
 use App\Models\NewSubscribe;
 use Illuminate\Http\Request;
-use session;
+// use session;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session; // Add this line
+
 
 class NewSubscribeController extends Controller
 {
@@ -16,10 +20,11 @@ class NewSubscribeController extends Controller
         ]);
          $new=  NewSubscribe::create($data);
          if(!$new){
-            session::flash('error','sorry try again!');
+            Session::flash('error','sorry try again!');
             return redirect()->back();
          }
-         session::flash('success','thanks for subscribe');
+         Mail::to($request->email)->send(new NewsubscriberMail());
+         Session::flash('success','thanks for subscribe');
            return redirect()->back();
     }
 }
