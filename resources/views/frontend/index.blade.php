@@ -14,7 +14,7 @@
               <div class="tn-img">
                 <img src="{{$post->images->first()->path}}" />
                 <div class="tn-title">
-                  <a href="">{{$post->title}}</a>
+                  <a href="{{ route ('frontend.show.post',$post->slug) }}">{{$post->title}}</a>
                 </div>
               </div>
             </div>
@@ -32,7 +32,7 @@
               <div class="tn-img">
                 <img src="{{$post->images->first()->path}}" />
                 <div class="tn-title">
-                  <a href="">{{$post->title}}</a>
+                  <a href="{{ route ('frontend.show.post',$post->slug) }}">{{$post->title}}</a>
                 </div>
               </div>
             </div>
@@ -59,7 +59,7 @@
               <div class="cn-img">
                 <img src="{{$post->images->first()->path}}" />
                 <div class="cn-title">
-                  <a href="">{{$post->title}}</a>
+                  <a href="{{ route ('frontend.show.post',$post->slug) }}">{{$post->title}}</a>
                 </div>
               </div>
             </div>
@@ -106,7 +106,7 @@
                 <img src="{{$post->images->first()->path}}" />
               </div>
               <div class="tn-title">
-                <a href="">{{$post->title}}</a>
+                <a href="{{ route ('frontend.show.post',$post->slug) }}">{{$post->title}}</a>
               </div>
             </div>
              @endforeach
@@ -119,7 +119,7 @@
                   <img src="{{$post->images->first()->path}}" />
                 </div>
                 <div class="tn-title">
-                  <a href="">{{$post->title}}comments ({{$post->comments_count}})</a>
+                  <a href="{{ route ('frontend.show.post',$post->slug) }}">{{$post->title}}comments ({{$post->comments_count}})</a>
                 </div>
               </div>
               @endforeach
@@ -154,7 +154,7 @@
                 <img src="{{$post->images->first()->path}}" />
               </div>
               <div class="tn-title">
-                <a href="">{{$post->title}}</a>
+                <a href="{{ route ('frontend.show.post',$post->slug) }}">{{$post->title}}</a>
               </div>
             </div>
             @endforeach
@@ -167,7 +167,7 @@
                   <img src="{{$post->images->first()->path}}" />
                 </div>
                 <div class="tn-title">
-                  <a href="">{{$post->title}}({{$post->num_of_views}})</a>
+                  <a href="{{ route ('frontend.show.post',$post->slug) }}">{{$post->title}}({{$post->num_of_views}})</a>
                 </div>
               </div>
               @endforeach
@@ -193,7 +193,7 @@
               <div class="mn-img">
                 <img src="{{$post->images->first()->path}}" />
                 <div class="mn-title">
-                  <a href="">{{$post->title}}</a>
+                  <a href="{{ route ('frontend.show.post',$post->slug) }}">{{$post->title}}</a>
                 </div>
               </div>
             </div>

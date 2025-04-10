@@ -20,6 +20,7 @@ class Post extends Model
         'status',
         'user_id',
         'category_id',
+        'num_of_views',
     ];
     /**
      * Return the sluggable configuration array for this model.

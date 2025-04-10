@@ -26,7 +26,8 @@ class UserFactory extends Factory
         return [
             'name' => fake()->name(),
             'username' => fake()->username(),
-            'image' => fake()->imageUrl(),
+            // 'image' => fake()->imageUrl(),
+            'image' => 'https://picsum.photos/seed/' . fake()->unique()->word . '/640/480',
             'status' => fake()->randomElement([0,1]),
             'country' => fake()->country(),
             'city' => fake()->city(),

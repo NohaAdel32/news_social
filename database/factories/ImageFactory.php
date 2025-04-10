@@ -19,7 +19,8 @@ class ImageFactory extends Factory
     {
         $date=fake()->date('Y-m-d h:m:s');
         return [
-            'path'=>fake()->imageUrl,//بحط post_id هناك عند سيدر البوست علشان يربط ك1ا صورة بالبوست
+            // 'path'=>fake()->imageUrl(),//بحط post_id هناك عند سيدر البوست علشان يربط ك1ا صورة بالبوست
+            'path' => 'https://picsum.photos/seed/' . fake()->unique()->word . '/640/480',
             'created_at'=>$date,
             'updated_at'=>$date,
         ];

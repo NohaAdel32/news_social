@@ -32,7 +32,7 @@ class CacheServiceProvider extends ServiceProvider
 
         //related new sites
         $related=RelatedNewSite::select('name','url')->get();
-        $categories=Category::select('name','slug')->get();
+        $categories=Category::select('id','name','slug')->get();
         view()->share([
             'read_more_posts'=>$read_more_posts,
             'related'=>$related,

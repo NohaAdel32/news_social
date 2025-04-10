@@ -5,3 +5,4 @@
 
     <!-- Template Javascript -->
     <script src="{{asset('assets/frontend/js/main.js')}}"></script>
+    @stack('js')
