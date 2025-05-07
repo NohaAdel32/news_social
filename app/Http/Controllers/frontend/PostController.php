@@ -12,10 +12,10 @@ class PostController extends Controller
 
     public function show($slug)
     {
-        $mainpost = Post::with(['comments'=>function($query){
+        $mainpost = Post::Active()->with(['comments'=>function($query){
             $query->latest()->limit(3);
         }])->whereSlug($slug)->first();
-        $post_in_category = Post::where("category_id", $mainpost->category_id)
+        $post_in_category = Post::Active()->where("category_id", $mainpost->category_id)
             ->limit(5)->get();
         return view("frontend.single", compact("mainpost","post_in_category"));
     }

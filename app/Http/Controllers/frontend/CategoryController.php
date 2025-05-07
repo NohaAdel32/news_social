@@ -14,7 +14,7 @@ class CategoryController extends Controller
     public function __invoke( $slug)
     {
        $category=Category::whereSlug($slug)->first();
-       $posts=$category->posts()->paginate(9);
+       $posts=$category->posts()->Active()->paginate(9);
        return view("frontend.category_posts",compact("category","posts"));
     }
 }

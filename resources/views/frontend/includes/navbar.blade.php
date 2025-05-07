@@ -16,7 +16,7 @@
           id="navbarCollapse"
         >
           <div class="navbar-nav mr-auto">
-            <a href="index.html" class="nav-item nav-link active">Home</a>
+            <a href="{{ route('frontend.index') }}" class="nav-item nav-link active">Home</a>
             <div class="nav-item dropdown">
               <a
                 href="#"
@@ -37,7 +37,7 @@
               >Single Page</a
             >
             <a href="dashboard.html" class="nav-item nav-link">Dashboard</a>
-            <a href="contact.html" class="nav-item nav-link">Contact Us</a>
+            <a href="{{ route('frontend.contact.index') }}" class="nav-item nav-link">Contact Us</a>
           </div>
           <div class="social ml-auto">
             <a href="{{$getsetting->twitter}}" title="twitter"><i class="fab fa-twitter"></i></a>

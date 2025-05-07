@@ -1,16 +1,9 @@
 @extends('layouts.frontend.app')
+@section('breadcrumb')
+@parent
+<li class="breadcrumb-item active">{{ $mainpost->title }}</li>
+@endsection
 @section('content')
-<!-- Breadcrumb Start -->
-<div class="breadcrumb-wrap">
-    <div class="container">
-      <ul class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">News</a></li>
-        <li class="breadcrumb-item active">News details</li>
-      </ul>
-    </div>
-  </div>
-  <!-- Breadcrumb End -->
 
   <!-- Single News Start-->
   <div class="single-news">

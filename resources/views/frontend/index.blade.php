@@ -1,4 +1,8 @@
 @extends('layouts.frontend.app')
+@section('breadcrumb')
+@parent
+
+@endsection
 @section('content')
 <!-- Top News Start-->
 <div class="top-news">
