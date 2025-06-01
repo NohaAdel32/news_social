@@ -9,7 +9,10 @@
   content="Bootstrap News Template - Free HTML Templates"
   name="description"
 />
-
+{{-- file input --}}
+<link href="{{ asset('assets/vendors/file_input/css/fileinput.min.css') }}" rel="stylesheet"/>
+{{-- summernote --}}
+<link href="{{ asset('assets/vendors/summernote/summernote-bs4.min.css') }}" rel="stylesheet"/>
 <!-- Favicon -->
 <link href="{{asset('assets/frontend/img/favicon.ico')}}" rel="icon" />
 

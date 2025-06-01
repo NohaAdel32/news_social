@@ -222,5 +222,5 @@
   <!-- Main News End-->
 @endsection
 @section('title')
-Bootstrap News Template - Free HTML Templates
+{{ config('app.name') }} 
 @endsection

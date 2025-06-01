@@ -33,5 +33,5 @@
   <!-- Main News End-->
 @endsection
 @section('title')
-Search
+{{ config('app.name') }} | Search
 @endsection

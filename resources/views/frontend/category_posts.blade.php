@@ -46,5 +46,6 @@
   <!-- Main News End-->
 @endsection
 @section('title')
-{{ $category->name }}
+{{ config('app.name') }} | {{ $category->name }}
+
 @endsection

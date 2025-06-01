@@ -231,7 +231,7 @@
   <!-- Single News End-->
 @endsection
 @section('title')
-Single
+{{ config('app.name') }} | {{ $mainpost->title }}
 @endsection
 @push('js')
 <script>

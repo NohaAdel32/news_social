@@ -107,5 +107,5 @@
 
 @endsection
 @section('title')
-Contact Us 
+{{ config('app.name') }} | Contact Us 
 @endsection
