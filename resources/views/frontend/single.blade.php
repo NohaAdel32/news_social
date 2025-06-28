@@ -20,11 +20,11 @@
               <div class="carousel-inner">
                 @foreach ($mainpost->images as $index=>$image)
                 <div class="carousel-item @if($index==0) active @endif">
-                  <img src="{{$image->path}}" class="d-block w-100" alt="First Slide">
+                  <img src="{{asset($image->path)}}" class="d-block w-100" alt="First Slide" width="640px" height="480px">
                   <div class="carousel-caption d-none d-md-block">
-                    <h5>{{ $mainpost->title }}</h5>
+                    <h5>{!! $mainpost->title  !!}</h5>
                     <p>
-                      {{ substr($mainpost->desc,0,80) }}
+                      {{-- {!! substr($mainpost->desc,0,80) !!} --}}
                     </p>
                   </div>
                 </div>
@@ -43,21 +43,28 @@
               </a>
             </div>
             <div class="sn-content">
-              {{ $mainpost->desc }}
+             {!! $mainpost->desc !!}
            </div>
 
             <!-- Comment Section -->
             <div class="comment-section">
               <!-- Comment Input -->
-              <form id="commentForm">
+              @if($mainpost->comment_able)
+                  <form id="commentForm">
                 @csrf
               <div class="comment-input">
                 <input type="text" placeholder="Add a comment..." id="commentBox" name="comment"/>
-                <input type="hidden" name="user_id" value="1"/>
+                <input type="hidden" name="user_id" value="{{ auth()->user()->id }}"/>
                 <input type="hidden" name="post_id" value="{{ $mainpost->id }}"/>
                 <button id="addCommentBtn" type="submit">Post</button>
               </div>
             </form>
+            @else
+            <div class="alert alert-info">
+              Unable to write comment
+            </div>
+              @endif
+              
             <div style="display: none;" id="errorMsg" class="alert alert-danger">
             </div>
               <!-- Display Comments -->
@@ -79,7 +86,10 @@
               </div>
 
               <!-- Show More Button -->
-              <button id="showMoreBtn" class="show-more-btn">Show more</button>
+              @if ($mainpost->comments->count()>2)
+                <button id="showMoreBtn" class="show-more-btn">Show more</button>
+              @endif
+              
             </div>
 
             <!-- Related News -->
@@ -89,7 +99,7 @@
                 @foreach ($post_in_category as $post)
                 <div class="col-md-4">
                   <div class="sn-img">
-                    <img src="{{$post->images->first()->path}}" class="img-fluid" alt="Related News 1" />
+                    <img src="{{asset($post->images->first()->path)}}" class="img-fluid" alt="Related News 1" />
                     <div class="sn-title">
                       <a href="{{ route ('frontend.show.post',$post->slug) }}" title="{{ $post->title }}">{{ $post->title }}</a>
                     </div>
@@ -110,7 +120,7 @@
                 @foreach ( $post_in_category as $post)
                 <div class="nl-item">
                   <div class="nl-img">
-                    <img src="{{$post->images->first()->path}}" />
+                    <img src="{{asset($post->images->first()->path)}}" />
                   </div>
                   <div class="nl-title">
                     <a href="{{ route ('frontend.show.post',$post->slug) }}"
@@ -124,13 +134,7 @@
               </div>
             </div>
 
-            <div class="sidebar-widget">
-              <div class="image">
-                <a href="https://htmlcodex.com"
-                  ><img src="{{asset('assets/frontend/img/ads-2.jpg')}}" alt="Image"
-                /></a>
-              </div>
-            </div>
+           
 
             <div class="sidebar-widget">
               <div class="tab-news">
@@ -154,7 +158,7 @@
                     @foreach($greatest_comments as $post)
                     <div class="tn-news">
                       <div class="tn-img">
-                        <img src="{{$post->images->first()->path}}" />
+                        <img src="{{asset($post->images->first()->path)}}" />
                       </div>
                       <div class="tn-title">
                         <a href="{{ route ('frontend.show.post',$post->slug) }}"
@@ -169,7 +173,7 @@
                     @foreach ($latest_posts as $post )
                     <div class="tn-news">
                       <div class="tn-img">
-                        <img src="{{$post->images->first()->path}}" />
+                        <img src="{{asset($post->images->first()->path)}}" />
                       </div>
                       <div class="tn-title">
                         <a href="{{ route ('frontend.show.post',$post->slug) }}"
@@ -184,13 +188,6 @@
               </div>
             </div>
 
-            <div class="sidebar-widget">
-              <div class="image">
-                <a href="https://htmlcodex.com"
-                  ><img src="{{asset('assets/frontend/img/ads-2.jpg')}}" alt="Image"
-                /></a>
-              </div>
-            </div>
 
             <div class="sidebar-widget">
               <h2 class="sw-title">News Category</h2>
@@ -203,13 +200,7 @@
               </div>
             </div>
 
-            <div class="sidebar-widget">
-              <div class="image">
-                <a href="https://htmlcodex.com"
-                  ><img src="{{asset('assets/frontend/img/ads-2.jpg')}}" alt="Image"
-                /></a>
-              </div>
-            </div>
+           
 
             <div class="sidebar-widget">
               <h2 class="sw-title">Tags Cloud</h2>

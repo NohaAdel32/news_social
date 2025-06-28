@@ -2,8 +2,19 @@
 
 namespace App\Http\Controllers\frontend\dashboard;
 
-use App\Http\Controllers\Controller;
+use auth;
+use Exception;
+use App\Models\Post;
+use App\Models\User;
+use App\Utils\ImageManager;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Requests\postRequest;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\File;
 
 class profileController extends Controller
 {
@@ -12,7 +23,9 @@ class profileController extends Controller
      */
     public function index()
     {
-       return view('frontend.dashboard.profile');
+        $posts = auth()->user()->posts()->active()->with(['images'])->latest()->get();
+
+        return view('frontend.dashboard.profile', compact('posts'));
     }
 
     /**
@@ -26,9 +39,23 @@ class profileController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(postRequest $request)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $request->validated();
+            $request->comment_able == "on" ? $request->merge(['comment_able' => 1]) : $request->merge(['comment_able' => 0]);
+            $post = auth()->user()->posts()->create($request->except(['_token', 'images']));
+            ImageManager::uploadImage($request, $post);
+            DB::commit();
+            Cache::forget('read_more_posts');
+            cache::forget('latest_posts');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(['errors' => $e->getMessage()]);
+        }
+        Session::flash('success', 'Your registration was successful.');
+        return redirect()->back();
     }
 
     /**
@@ -50,9 +77,9 @@ class profileController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(string $slug)
     {
-        //
+        return $slug;
     }
 
     /**
@@ -60,6 +87,14 @@ class profileController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $post = Post::findOrFail($id);
+      
+       ImageManager::deleteImages($post);
+
+
+        $post->delete(); // حذف البوست نفسه
+
+        Session::flash('success', 'Delete Data Success');
+        return redirect()->back();
     }
 }

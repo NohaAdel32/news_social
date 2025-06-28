@@ -34,9 +34,12 @@ Route::post('/store',[ContactController::class, 'store'])->name('store');
 });
 Route::match(['get','post'],'search',SearchController::class)->name('search');
 
-Route::prefix('user/')->name('dashboard.')->middleware(['auth:web','verified'])->group(function(){
+Route::prefix('account/')->name('dashboard.')->middleware(['auth:web','verified'])->group(function(){
     Route::controller(profileController::class)->group(function(){
        Route::get('profile','index')->name('showProfile');
+       Route::post('post/store','store')->name('storePost');
+       Route::get('post/edit/{slug}','update')->name('editPost');
+       Route::get('post/delete/{id}','destroy')->name('deletePost');
     });
 });
 });

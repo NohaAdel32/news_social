@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Providers;
+use App\Models\Category;
 use App\Models\Post;
+use App\Models\RelatedNewSite;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 
@@ -20,26 +22,14 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        if(!Cache::has('latest_posts')){
-            $latest_posts=Post::select('id','title','slug')->latest()->limit(5)->get();
-            Cache::remember('latest_posts',3600,function()use($latest_posts){
-                return $latest_posts;
-            });
-        }
+      //related new sites
+        $related=RelatedNewSite::select('name','url')->get();
+        $categories=Category::select('id','name','slug')->get();
         
-        if(!Cache::has('greatest_comments')){
-            $greatest_comments=Post::withCount('comments')->orderBy('comments_count','desc')
-      ->take(5)
-      ->get();
-            Cache::remember('greatest_comments',3600,function()use($greatest_comments){
-                return $greatest_comments;
-            });
-        }
-        $latest_posts=Cache::get('latest_posts');
-        $greatest_comments=Cache::get('greatest_comments');
         view()->share([
-            'latest_posts'=>$latest_posts,
-            'greatest_comments'=>$greatest_comments,
+         
+             'related'=>$related,
+            'categories'=>$categories,
         ]);
     }
 }
