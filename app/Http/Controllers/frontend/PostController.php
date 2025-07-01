@@ -17,6 +17,7 @@ class PostController extends Controller
         }])->whereSlug($slug)->first();
         $post_in_category = Post::Active()->where("category_id", $mainpost->category_id)
             ->limit(5)->get();
+        $mainpost->increment('num_of_views');
         return view("frontend.single", compact("mainpost","post_in_category"));
     }
     

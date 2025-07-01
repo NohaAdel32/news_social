@@ -40,6 +40,7 @@ Route::prefix('account/')->name('dashboard.')->middleware(['auth:web','verified'
        Route::post('post/store','store')->name('storePost');
        Route::get('post/edit/{slug}','update')->name('editPost');
        Route::get('post/delete/{id}','destroy')->name('deletePost');
+       Route::get('post/getComments/{id}','getComment')->name('post.getComments');
     });
 });
 });

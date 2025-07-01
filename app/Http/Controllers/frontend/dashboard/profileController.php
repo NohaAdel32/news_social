@@ -6,15 +6,16 @@ use auth;
 use Exception;
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Comment;
 use App\Utils\ImageManager;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Requests\postRequest;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\File;
 
 class profileController extends Controller
 {
@@ -88,13 +89,28 @@ class profileController extends Controller
     public function destroy(string $id)
     {
         $post = Post::findOrFail($id);
-      
-       ImageManager::deleteImages($post);
+
+        ImageManager::deleteImages($post);
 
 
         $post->delete(); // حذف البوست نفسه
 
         Session::flash('success', 'Delete Data Success');
         return redirect()->back();
+    }
+    public function getComment($id)
+    {
+        $comments = Comment::with(['user'])->where('post_id', $id)->get();
+    
+        if ($comments->isEmpty()) {
+            return response()->json([
+                'data' => null,
+                'msg' => 'No Comments'
+            ]);
+        }
+        return response()->json([
+            'data' => $comments,
+            'msg' => "Contain Comments",
+        ]);
     }
 }

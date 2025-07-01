@@ -140,21 +140,18 @@
                               <a href="post/delete/{{ $post->id }}" class="btn btn-sm btn-outline-primary"onclick="return confirm('Are you sure you want to delete?')">
                                   <i class="fas fa-thumbs-up"></i> Delete
                               </a>
-                              <button class="btn btn-sm btn-outline-secondary">
+                              <button id="commentbtn_{{ $post->id }}" class="btn btn-sm btn-outline-secondary getComments" post-id={{ $post->id }}>
                                   <i class="fas fa-comment"></i> Comments
+                              </button>
+                              <button id="hidebtn_{{ $post->id }}" class="btn btn-sm btn-outline-secondary hideComments" post-id={{ $post->id }} style="display:none;">
+                                  <i class="fas fa-comment"></i> Hide Comments
                               </button>
                           </div>
                       </div>
 
                         <!-- Display Comments -->
-                        <div class="comments">
-                              <div class="comment">
-                                  <img src="{{ asset('assets/frontend/img/news-825x525.jpg') }}" alt="User Image" class="comment-img" />
-                                  <div class="comment-content">
-                                      <span class="username"></span>
-                                      <p class="comment-text">first comment</p>
-                                  </div>
-                              </div>
+                        <div class="comments" id="displayComments_{{ $post->id }}"style="display:none;">
+                            
                           <!-- Add more comments here for demonstration -->
                          </div>
                   </div>  
@@ -183,6 +180,7 @@ $(document).ready(function() {
          theme: 'fa5',
           showCancel: true,
           showUpload:false,
+          maxFileCount:5,
     });
 
     // with plugin options
@@ -192,6 +190,40 @@ $(document).ready(function() {
         height: 300,
     });
     
+});
+//get comments
+$(document).on('click','.getComments',function(e){
+e.preventDefault();
+var post_id=$(this).attr('post-id');
+$.ajax({
+ type:"GET",
+ url:'{{ route('frontend.dashboard.post.getComments',':post_id') }}'.replace(':post_id',post_id),
+ success:function(response){
+    $('#displayComments_' + post_id).empty();
+    
+    $.each(response.data,function(key,comment){
+     $('#displayComments_' + post_id).append(`  <div class="comment">
+                                  <img src="${comment.user.image}" alt="User Image" class="comment-img" />
+                                  <div class="comment-content">
+                                      <span class="username">${comment.user.name}</span>
+                                      <p class="comment-text">${comment.comment}</p>
+                                  </div>
+                              </div>`).show();
+                             
+    });
+     $('#commentbtn_'+post_id).hide();
+     $('#hidebtn_'+post_id).show();
+ }
+});
+});
+
+$(document).on('click','.hideComments',function(e){
+  e.preventDefault();
+  var post_id=$(this).attr('post-id');
+   $('#commentbtn_'+post_id).show();
+     $('#hidebtn_'+post_id).hide();
+     $('#displayComments_' + post_id).hide();
+
 });
 </script>
 @endpush
