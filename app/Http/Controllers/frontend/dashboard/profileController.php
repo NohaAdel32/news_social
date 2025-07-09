@@ -7,6 +7,7 @@ use Exception;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Comment;
+use App\Models\Category;
 use App\Utils\ImageManager;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -70,17 +71,22 @@ class profileController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($slug)
     {
-        //
+      $post = Post::with(['images'])->where('slug', $slug)->firstOrFail();
+      if(!$post){
+        abort(404);
+      }
+       
+       return view('frontend.dashboard.editPost',compact('post'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(string $slug)
+    public function update(Request $request)
     {
-        return $slug;
+        return $request;
     }
 
     /**
